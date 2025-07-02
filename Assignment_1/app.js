@@ -31,13 +31,18 @@ const User = require('./models/users');
 
 const addUser = async () => {
     await connectDB(); // connectign to the database
+    // why async await? Because when we are heavy lifting like database operatuions or reading files, do not put this on the main thread, use async await to make it non-blocking
+    // database operations, file reading or network reading, these should be asyncronously processed
 
     // creating the instance of the User Object
-    const newUser = new User({ name: "Ayush", email: "ayush@gmail.com" });
+    // const newUser = new User({ name: "Ayush", email: "ayush@gmail.com" });
 
     // saving the new user to the database
-    await newUser.save();
-    console.log("✅ User added:", newUser);
+    // await newUser.save();
+    // console.log("✅ User added:", newUser);
+    const users = await User.find();
+    console.log("******************")
+    console.log("✅ All Users:", users);
 
     // terminating the connection
     process.exit(0);
