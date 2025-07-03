@@ -7,7 +7,14 @@ const generateToken = (user) => {
   });
 };
 
-const hashPassword = (password) => bcrypt.hash(password, 10);
-const comparePasswords = (input, hash) => bcrypt.compare(input, hash);
+const hashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+};
+
+const comparePasswords = async (input, hashed) => {
+  return await bcrypt.compare(input, hashed);
+};
 
 module.exports = { generateToken, hashPassword, comparePasswords };
+// Auth service (JWT + bcrypt) 
